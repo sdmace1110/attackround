@@ -1,0 +1,99 @@
+body {
+    font-family: sans-serif;
+    margin: 20px;
+}
+
+.carousel-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.carousel {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px;
+}
+
+.player-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-right: 10px;
+    min-width: 200px;
+    box-shadow: 2px 2px 5px #eee;
+}
+
+.carousel-button {
+    padding: 10px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.current-turn {
+    border: 1px solid #bbb;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.current-turn h2 {
+    margin-top: 0;
+}
+
+.current-turn label {
+    display: inline-block;
+    width: 100px;
+    margin-bottom: 5px;
+}
+
+.current-turn input[type="number"],
+.current-turn input[type="text"],
+.current-turn textarea {
+    padding: 5px;
+    margin-bottom: 10px;
+    width: calc(100% - 110px);
+    box-sizing: border-box;
+}
+
+#player-modal {
+    border: 1px solid #aaa;
+    padding: 20px;
+    background-color: #eee;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 5px 5px 10px #ccc;
+}
+
+#player-modal label {
+    display: inline-block;
+    width: 120px;
+    margin-bottom: 5px;
+}
+
+#player-modal input[type="number"],
+#player-modal input[type="text"] {
+    padding: 5px;
+    margin-bottom: 10px;
+    width: calc(100% - 130px);
+    box-sizing: border-box;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+}
+
+.controls button {
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+/* Highlight the current player */
+.highlight {
+    border: 2px solid gold;
+    background-color: rgba(255, 223, 0, 0.2);
+    box-shadow: 0 0 10px rgba(255, 223, 0, 0.8);
+    transition: all 0.3s ease-in-out;
+}

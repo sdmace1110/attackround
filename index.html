@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D Combat Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="carousel-container">
+            <button @click="prevPlayer" class="carousel-button">&lt;</button>
+            <div class="carousel">
+                <div 
+                    v-for="(player, index) in sortedPlayers" 
+                    :key="player.playerName" 
+                    class="player-card"
+                    :class="{ 'highlight': player === currentPlayer }"   
+                >
+                    <h3>{{ player.characterName }}</h3>
+                    <p>Player: {{ player.playerName }}</p>
+                    <p>HP: {{ player.currentHps }} / {{ player.maxHps }}</p>
+                    <p>Initiative: {{ player.initiative }}</p>
+                    </div>
+            </div>
+            <button @click="nextPlayer" class="carousel-button">&gt;</button>
+        </div>
+
+        <div class="current-turn" v-if="currentPlayer">
+            <h2>{{ currentPlayer.characterName }}'s Turn</h2>
+            <p>HP: <input type="number" v-model.number="currentPlayer.currentHps"> / {{ currentPlayer.maxHps }}</p>
+            <div>
+                <h3>Actions</h3>
+                <div v-for="(attack, index) in currentTurnActions.attacks" :key="'attack-' + index">
+                    <label for="target">Target:</label>
+                    <input type="text" v-model="attack.target">
+                    <label for="roll">Roll:</label>
+                    <input type="number" v-model.number="attack.roll">
+                    <label for="damage">Damage:</label>
+                    <input type="number" v-model.number="attack.damage">
+                    <label for="damageType">Type:</label>
+                    <input type="text" v-model="attack.damageType">
+                    <label for="notes">Notes:</label>
+                    <input type="text" v-model="attack.notes">
+                    <button @click="removeAction('attacks', index)">Remove</button>
+                </div>
+                <button @click="addAction('attacks')">Add Attack</button>
+            </div>
+            <div>
+                <label for="movement">Movement:</label>
+                <input type="text" v-model="currentTurnActions.movement">
+            </div>
+            <div>
+                <label for="otherActions">Other Actions:</label>
+                <textarea v-model="currentTurnActions.otherActions"></textarea>
+            </div>
+            <button @click="nextTurn">Next Turn</button>
+        </div>
+        <div class="current-turn" v-else>
+            <p>Select a player to start the turn.</p>
+        </div>
+
+        <div id="player-modal" v-if="showPlayerModal">
+            <h2>{{ editingPlayer ? 'Edit Player' : 'Add New Player' }}</h2>
+            <label for="playerName">Player Name:</label>
+            <input type="text" v-model="newPlayer.playerName"><br>
+
+            <label for="characterName">Character Name:</label>
+            <input type="text" v-model="newPlayer.characterName"><br>
+
+            <label for="maxHps">Max HP:</label>
+            <input type="number" v-model.number="newPlayer.maxHps"><br>
+
+            <label for="currentHps">Current HP:</label>
+            <input type="number" v-model.number="newPlayer.currentHps"><br>
+
+            <label for="initiative">Initiative:</label>
+            <input type="number" v-model.number="newPlayer.initiative"><br>
+
+            <button @click="savePlayer">Save Player</button>
+            <button @click="closePlayerModal">Cancel</button>
+        </div>
+
+        <div class="controls">
+            <button @click="sortPlayersByInitiative">Sort by Initiative</button>
+            <button @click="openPlayerModal()">{{ editingPlayer ? 'Edit Player' : 'Add Player' }}</button>
+            <button @click="saveDataToFile">Save Data</button>
+            </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
