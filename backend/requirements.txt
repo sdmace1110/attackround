@@ -5,4 +5,5 @@ asyncpg
 alembic
 PyJWT
 bcrypt
-pydantic
+pydantic[email]
+email-validator

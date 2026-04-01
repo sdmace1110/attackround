@@ -19,64 +19,64 @@
 
 ### Repo & Project Structure
 - [ ] Create GitHub repo; clone locally
-- [ ] Create monorepo folders: `/backend` and `/frontend` at the root
-- [ ] Create root `.env` from the template below (fill in real values):
+- [x] Create monorepo folders: `/backend` and `/frontend` at the root
+- [x] Create root `.env` from the template below (fill in real values):
   ```
   DATABASE_URL=postgresql+asyncpg://dnduser:dndpass@db:5432/dndtracker
   SECRET_KEY=changeme
   VITE_API_URL=http://localhost:8000
   VITE_WS_URL=ws://localhost:8000
   ```
-- [ ] Create `.env.example` with the same keys but blank/placeholder values — commit this, not `.env`
-- [ ] Add `.env` to `.gitignore`
+- [x] Create `.env.example` with the same keys but blank/placeholder values — commit this, not `.env`
+- [x] Add `.env` to `.gitignore`
 
 ### Backend Scaffold
-- [ ] Create `backend/requirements.txt` with: `fastapi`, `uvicorn[standard]`, `sqlalchemy[asyncio]`, `asyncpg`, `alembic`, `PyJWT`, `bcrypt`, `pydantic`
-- [ ] Create `backend/main.py` — FastAPI app init, CORS middleware, router registration stubs
-- [ ] Create empty folders: `routers/`, `models/`, `schemas/`, `db/`, `services/`, `utils/`
-- [ ] Create `backend/Dockerfile` — base `python:3.11-slim`; install requirements; CMD runs `uvicorn main:app --host 0.0.0.0 --port 8000`
+- [x] Create `backend/requirements.txt` with: `fastapi`, `uvicorn[standard]`, `sqlalchemy[asyncio]`, `asyncpg`, `alembic`, `PyJWT`, `bcrypt`, `pydantic`
+- [x] Create `backend/main.py` — FastAPI app init, CORS middleware, router registration stubs
+- [x] Create empty folders: `routers/`, `models/`, `schemas/`, `db/`, `services/`, `utils/`
+- [x] Create `backend/Dockerfile` — base `python:3.11-slim`; install requirements; CMD runs `uvicorn main:app --host 0.0.0.0 --port 8000`
 
 ### Database & Migrations
-- [ ] Create `backend/db/database.py` — async SQLAlchemy engine using `DATABASE_URL` from env; session factory
-- [ ] Run `alembic init db/alembic` inside the backend folder
-- [ ] Edit `alembic.ini` and `env.py` to use the async engine and read `DATABASE_URL` from env
-- [ ] Create `models/user.py` — `users` table: `id` (uuid PK), `email`, `hashed_password`, `created_at`
-- [ ] Write and run first migration: `alembic revision --autogenerate -m "users"` → `alembic upgrade head`
-- [ ] Verify table exists: connect to Postgres container and run `\dt`
+- [x] Create `backend/db/database.py` — async SQLAlchemy engine using `DATABASE_URL` from env; session factory
+- [x] Run `alembic init db/alembic` inside the backend folder
+- [x] Edit `alembic.ini` and `env.py` to use the async engine and read `DATABASE_URL` from env
+- [x] Create `models/user.py` — `users` table: `id` (uuid PK), `email`, `hashed_password`, `created_at`
+- [x] Write and run first migration: `alembic revision --autogenerate -m "users"` → `alembic upgrade head`
+- [x] Verify table exists: connect to Postgres container and run `\dt`
 
 ### Auth Endpoints
-- [ ] Create `utils/auth.py` — `hash_password()`, `verify_password()`, `create_token()`, `decode_token()` using `PyJWT`; sign with `SECRET_KEY`; 24hr expiry for DM tokens
-- [ ] Create `routers/auth.py` — `POST /auth/register` (email + password → hashed, stored, returns 201) and `POST /auth/login` (verify password → return JWT)
-- [ ] Create Pydantic schemas in `schemas/auth.py` for register and login request/response bodies
-- [ ] Register `auth` router in `main.py`
-- [ ] **Test in Swagger:** register a user → log in → confirm JWT comes back
+- [x] Create `utils/auth.py` — `hash_password()`, `verify_password()`, `create_token()`, `decode_token()` using `PyJWT`; sign with `SECRET_KEY`; 24hr expiry for DM tokens
+- [x] Create `routers/auth.py` — `POST /auth/register` (email + password → hashed, stored, returns 201) and `POST /auth/login` (verify password → return JWT)
+- [x] Create Pydantic schemas in `schemas/auth.py` for register and login request/response bodies
+- [x] Register `auth` router in `main.py`
+- [x] **Test in Swagger:** register a user → log in → confirm JWT comes back
 
 ### Frontend Scaffold
-- [ ] Run `npm create vite@latest frontend -- --template react` inside the project root
-- [ ] Install dependencies: `npm install axios react-router-dom zustand`
-- [ ] Install and configure Tailwind CSS (follow Tailwind + Vite guide)
-- [ ] Edit `vite.config.js` — add `server: { host: '0.0.0.0', port: 5173 }`
-- [ ] Create `frontend/Dockerfile` — node base image; install deps; CMD runs `npm run dev`
-- [ ] Create `src/services/api.js` — Axios instance pointing to `import.meta.env.VITE_API_URL`; add request interceptor to attach JWT from localStorage
-- [ ] Create `src/store/authStore.js` — Zustand store: `token`, `user`, `login()`, `logout()`
-- [ ] Create `src/pages/DmLoginPage.jsx` — simple email/password form; calls `authStore.login()`; redirects to `/dm/dashboard` on success
-- [ ] Create `src/pages/DmDashboardPage.jsx` — stub page, just renders "Dashboard" text for now
-- [ ] Create `src/router/index.jsx` — React Router v6 routes; wrap `/dm/*` routes in a `ProtectedRoute` component that checks for a valid JWT
+- [x] Run `npm create vite@latest frontend -- --template react` inside the project root
+- [x] Install dependencies: `npm install axios react-router-dom zustand`
+- [x] Install and configure Tailwind CSS (follow Tailwind + Vite guide)
+- [x] Edit `vite.config.js` — add `server: { host: '0.0.0.0', port: 5173 }`
+- [x] Create `frontend/Dockerfile` — node base image; install deps; CMD runs `npm run dev`
+- [x] Create `src/services/api.js` — Axios instance pointing to `import.meta.env.VITE_API_URL`; add request interceptor to attach JWT from localStorage
+- [x] Create `src/store/authStore.js` — Zustand store: `token`, `user`, `login()`, `logout()`
+- [x] Create `src/pages/DmLoginPage.jsx` — simple email/password form; calls `authStore.login()`; redirects to `/dm/dashboard` on success
+- [x] Create `src/pages/DmDashboardPage.jsx` — stub page, just renders "Dashboard" text for now
+- [x] Create `src/router/index.jsx` — React Router v6 routes; wrap `/dm/*` routes in a `ProtectedRoute` component that checks for a valid JWT
 
 ### Docker Compose
-- [ ] Create `docker-compose.yml` at the root with three services: `db` (postgres:15), `backend`, `frontend`
-- [ ] `db` service: named volume for persistence; set `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` from env
-- [ ] `backend` service: build from `./backend`; depends on `db`; mounts `.env`; exposes port 8000
-- [ ] `frontend` service: build from `./frontend`; exposes port 5173
-- [ ] Create `start-game-night.sh` at the root (portable IP detection script from CONTEXT.md Section 9); make it executable with `chmod +x`
+- [x] Create `docker-compose.yml` at the root with three services: `db` (postgres:15), `backend`, `frontend`
+- [x] `db` service: named volume for persistence; set `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` from env
+- [x] `backend` service: build from `./backend`; depends on `db`; mounts `.env`; exposes port 8000
+- [x] `frontend` service: build from `./frontend`; exposes port 5173
+- [~] Create `start-game-night.sh` at the root (portable IP detection script from CONTEXT.md Section 9); make it executable with `chmod +x` — DEFERRED (use `docker compose up` + `ipconfig` manually)
 
 ### Phase 1 Smoke Test
-- [ ] `docker-compose up` — all three containers start with no errors
-- [ ] `localhost:8000/docs` — Swagger UI loads
-- [ ] Register a DM account via Swagger
-- [ ] `localhost:5173` — React app loads in the browser
-- [ ] Log in as DM via the UI; confirm redirect to dashboard
-- [ ] Run `./start-game-night.sh`; open the printed IP URL on a phone — app loads
+- [x] `docker-compose up` — all three containers start with no errors
+- [x] `localhost:8000/docs` — Swagger UI loads
+- [x] Register a DM account via Swagger
+- [x] `localhost:5173` — React app loads in the browser
+- [x] Log in as DM via the UI; confirm redirect to dashboard
+- [~] Run `./start-game-night.sh`; open the printed IP URL on a phone — app loads — DEFERRED
 
 ---
 
