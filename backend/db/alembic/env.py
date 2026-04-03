@@ -7,6 +7,8 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
 
 from models.user import Base
+import models.campaign  # noqa: F401
+import models.character  # noqa: F401
 
 config = context.config
 if config.config_file_name is not None:

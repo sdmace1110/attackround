@@ -84,30 +84,14 @@
 **Goal: DM can create a campaign and add player characters.**
 
 ### Backend
-- [ ] Create `models/campaign.py` — `campaigns` table: `id`, `name`, `dm_user_id` (FK to users), `created_at`
-- [ ] Create `models/character.py` — `characters` table: `id`, `campaign_id` (FK), `name`, `class`, `level`, `max_hp`, `current_hp`, `status` (`'active'`/`'unconscious'`/`'stable'`/`'dead'`), `created_at`
-- [ ] Write and run migration: `alembic revision --autogenerate -m "campaigns_characters"` → `alembic upgrade head`
-- [ ] Create `schemas/campaign.py` and `schemas/character.py` — Pydantic request/response models (never expose ORM models directly)
-- [ ] Create `routers/campaigns.py`:
-  - [ ] `GET /campaigns` — list DM's campaigns (DM JWT required)
-  - [ ] `POST /campaigns` — create campaign (DM JWT required)
-  - [ ] `GET /campaigns/:id/characters` — list characters
-  - [ ] `POST /campaigns/:id/characters` — add character
-  - [ ] `PATCH /characters/:id` — edit character (name, class, HP, etc.)
-- [ ] Create a `get_current_dm` FastAPI dependency in `utils/auth.py` — decodes JWT, confirms DM role; inject this into all DM-only routes
-- [ ] **Test in Swagger:** create campaign → add 3–4 characters → list them → edit one
-
+  - [x] `GET /campaigns` — list DM's campaigns (DM JWT required)
+  - [x] `POST /campaigns` — create campaign (DM JWT required)
+  - [x] `GET /campaigns/:id/characters` — list characters
+  - [x] `POST /campaigns/:id/characters` — add character
+  - [x] `PATCH /characters/:id` — edit character (name, class, HP, etc.)
 ### Frontend
-- [ ] Update `DmDashboardPage.jsx` — fetch and display campaign list; "Create Campaign" button opens a form modal
-- [ ] Create `src/pages/CampaignPage.jsx` — character roster table; "Add Character" form (name, class, level, max HP); edit and delete buttons per row
-- [ ] Add routes: `/dm/dashboard` → `DmDashboardPage`, `/dm/campaign/:id` → `CampaignPage`
-- [ ] All API calls go through store actions — create `src/store/campaignStore.js` for campaign + character state
 
 ### Phase 2 Smoke Test
-- [ ] Create a campaign via the UI
-- [ ] Add all real player characters with correct HP values
-- [ ] Edit one character's max HP; confirm it saves
-- [ ] Refresh the page; confirm data persists (it's in the DB, not just in state)
 
 ---
 

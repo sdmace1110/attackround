@@ -1,10 +1,15 @@
 import os
+import uuid
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
 import bcrypt
 import jwt
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jwt import ExpiredSignatureError, InvalidTokenError
+
+_http_bearer = HTTPBearer()
 
 ALGORITHM = "HS256"
 TOKEN_EXPIRY_HOURS = 24
@@ -36,3 +41,15 @@ def decode_token(token: str) -> dict[str, Any]:
         raise ValueError("Token has expired") from exc
     except InvalidTokenError as exc:
         raise ValueError("Invalid token") from exc
+
+
+async def get_current_dm(
+    credentials: HTTPAuthorizationCredentials = Depends(_http_bearer),
+) -> uuid.UUID:
+    try:
+        payload = decode_token(credentials.credentials)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(exc))
+    if payload.get("role") != "dm":
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="DM access required")
+    return uuid.UUID(payload["sub"])
